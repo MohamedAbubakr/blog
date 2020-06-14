@@ -2,9 +2,9 @@ from django.views import generic
 from django.contrib.auth.models import User
 from .models import Blog, Author, Comment
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView
 
 
 def index(request):
@@ -28,7 +28,7 @@ class BloggerListView(generic.ListView):
 class AuthorDetailView(generic.DetailView):
     model = Author
 
-class AddComment(CreateView):
+class AddComment(LoginRequiredMixin, CreateView):
     model = Comment
     fields = ['comment_text', ]
 
